@@ -1,57 +1,41 @@
-# JHU Practical Machine Learning Course: Final Project Submission
-The assignment has been completed as part of John Hopkins University (JHU) Practical Machine Learning Course offered from CoursEra MOOC.
+# Final Project Submission: JHU Practical Machine Learning (Coursera)
+Kindly find the completed assignment project writeup for the Practical Machine Learning Course offered from Coursera through John Hopkins University (JHU)
 
-### Completed assignment link on GitHub is available here:
+# The GitHub assignment link can be downloaded from here:
+GitHub Repo – Click here (https://github.com/Deepika2216/JHU-ML-Assignment.git)
 
-GitHub Repo - [Click Here](https://github.com/ashmtwr/MachineLearning)
+# Background
 
-## Assignment Background
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, the goal was to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
 
-Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset). 
+# Raw data
 
-## Data Sources
+Link for Training Data (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv)
 
-Training data can be downloaded from [Training Data](https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv)
-
-Testing data can be downloaded from [Testing Data](https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv)
+Link for Testing Data (https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv)
 
 
-## Expected Output
+# ML Output
+The goal of this project is to predict the manner in which they did the exercise. This is denoted by the “classe” variable in the training set. 
+# R Code
+Kindly find the final code developed for assignment as ‘Deepika final analysis.R’ in the gitHub repo.
+# Load caret, rpart, rpart.plot, RColorBrewer, rattle, randomForest packages
 
-The goal of your project is to predict the manner in which they did the exercise. This is the "classe" variable in the training set. You may use any of the other variables to predict with. You should create a report describing how you built your model, how you used cross validation, what you think the expected out of sample error is, and why you made the choices you did. You will also use your prediction model to predict 20 different test cases.
-
-1 Your submission should consist of a link to a Github repo with your R markdown and compiled HTML file describing your analysis. Please constrain the text of the writeup to < 2000 words and the number of figures to be less than 5. It will make it easier for the graders if you submit a repo with a gh-pages branch so the HTML page can be viewed online (and you always want to make it easy on graders :-).
-
-2 You should also apply your machine learning algorithm to the 20 test cases available in the test data above.Please submit your predictions in appropriate format to the programming assignment for automated grading. See the programming assignment for additional details.
-
-## Detailed Code File
-
-Kindly review the Analysis.R file in the gitHub repo to review the code developed to complete the assignment. 
-
-## Load Required Packages
-
-I have assumed that the packages are already installed on the machine. In case if packages are not already installed, please use require("package name") or install.packages("package name") to load the package in your machine. Thanks..
-
-### Load caret, rpart, rpart.plot, RColorBrewer, rattle, randomForest packages
-
-```{r, results='hide'}
 library(caret)
 library(rpart)
 library(rpart.plot)
 library(RColorBrewer)
 library(rattle)
 library(randomForest)
-```
 
-### Set seed to reproduce same results 
+# Set seed to reproduce results 
 
 ```{r}
 set.seed(12345)
 ```
 
-### Loading data in machine cache
+# Loading data from source
 
-For this assignment, data has been loaded in cache. However, in case if user wants to load the data in the hard disc before proceeding, generic options are available to do the same.
 
 ```{r}
 trainUrl <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
@@ -60,9 +44,9 @@ training <- read.csv(url(trainUrl), na.strings=c("NA","#DIV/0!",""))
 testing <- read.csv(url(testUrl), na.strings=c("NA","#DIV/0!",""))
 ```
 
-### Partitioning the dataset into training and testing 
+# Splitting of data as testing and training
 
-Based on the lecture notes, below code is used to create training and testing dataset. 60% data is considered for the training set and remaining 40% is considered for testing the model.
+Based on the lecture notes, below code is used to create training and testing dataset. 60% data is considered for the training set and 40% is considered as testing set.
 
 A line of code is written to view the dimensions of the dataset.
 
@@ -73,7 +57,7 @@ dim(myTraining)
 dim(myTesting)
 ```
 
-### Data Cleansing
+# Data Cleansing
 
 Below transformations have been used to clean the dataset.
 
@@ -99,13 +83,13 @@ myTraining <- myTraining[!myNZVvars]
 dim(myTraining)
 ```
 
-### Remove first column of the dataset (ID) to ensure ML Algorithm can run smoothly
+# Remove first column of the dataset (ID) so that ML Algorithm runs smoothly
 
 ```{r}
 myTraining <- myTraining[c(-1)]
 ```
 
-### Updating the variables having NA values and setting back to original dataset
+# Updating the variables having NA values 
 
 ```{r}
 trainingV3 <- myTraining 
@@ -123,7 +107,7 @@ myTraining <- trainingV3
 rm(trainingV3)
 ```
 
-### Reproduce same transformations on the testing dataset and view dimensions of the testing dataset
+# Reproduce transformations on the test data and view dimensions of the test data
 
 ```{r}
 clean1 <- colnames(myTraining)
@@ -134,7 +118,7 @@ dim(myTesting)
 dim(testing)
 ```
 
-### In order to ensure proper functioning of Decision Trees and especially RandomForest Algorithm with the Test data set, we need to coerce the data into the same type.
+# In order to ensure proper functioning of Decision Trees and especially RandomForest Algorithm with the Test data set, we need to coerce the data into the same type.
 
 ```{r}
 for (i in 1:length(testing) ) {
@@ -148,25 +132,20 @@ testing <- rbind(myTraining[2, -58] , testing)
 testing <- testing[-1,]
 ```
 
-### Development of ML Algortihms for Predictions: Decision Tree
+# Development of ML Algortihms for Predictions: Decision Tree
 
 ```{r}
 modFitA1 <- rpart(classe ~ ., data=myTraining, method="class")
 ```
 
-### Develop Decision Tree
+# Prediction Algorithm: Confusion Matrix
 
-```{r}
-fancyRpartPlot(modFitA1)
-```
-
-### Prediction Algorithm and Confusion Matrix
 ```{r, results='hide'}
 predictionsA1 <- predict(modFitA1, myTesting, type = "class")
 confusionMatrix(predictionsA1, myTesting$classe)
 ```
 
-### Development of ML Algortihms for Predictions: Random Forest
+# Development of ML Algortihms for Predictions: Random Forest
 
 ```{r, results='hide'}
 modFitB1 <- randomForest(classe ~. , data=myTraining)
@@ -174,13 +153,13 @@ predictionsB1 <- predict(modFitB1, myTesting, type = "class")
 confusionMatrix(predictionsB1, myTesting$classe)
 ```
 
-## Creating files for executing the test cases as part of the assignment
+## Creating files for executing the test cases provided
 
 ```{r}
 predictionsB2 <- predict(modFitB1, testing, type = "class")
 ```
 
-### Code to automatically create the files and copy in your current working directory
+# Code to automatically create the files and copy in your current working directory
 Please change the directory using setwd() command in case if you want to change the working directory where files should be saved.
 
 ```{r}
@@ -194,4 +173,4 @@ write.table(x[i],file=filename,quote=FALSE,row.names=FALSE,col.names=FALSE)
 pml_write_files(predictionsB2)
 ```
 
-### Thanks for your time and patience in evaluating the assignment!!!
+### Thank you

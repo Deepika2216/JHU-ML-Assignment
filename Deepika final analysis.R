@@ -61,7 +61,7 @@ class(testing[j]) <- class(myTraining[i])
 testing <- rbind(myTraining[2, -58] , testing)
 testing <- testing[-1,]
 modFitA1 <- rpart(classe ~ ., data=myTraining, method="class")
-fancyRpartPlot(modFitA1)
+
 predictionsA1 <- predict(modFitA1, myTesting, type = "class")
 confusionMatrix(predictionsA1, myTesting$classe)
 modFitB1 <- randomForest(classe ~. , data=myTraining)
